@@ -50,7 +50,7 @@ export const updateLocation = functions.https.onRequest((request: any, response:
                 longitude: request.longitude
             } 
         }).then((docRef: any) => {
-            response.send("Location updated for plate " + plateNumber);
+            response.status(200).send("Location updated for plate " + plateNumber);
         });
     });
 });
