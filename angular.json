@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "Dash"
+    }
+  },
+  "defaultProject": "Dash",
+  "cli": {
+    "analytics": "ad82b25e-1b55-4709-89ab-4dcdce0b2f93"
+  }
 }

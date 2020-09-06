@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import {google} from "google-maps";
+declare var google : google;
 
 @Component({
   selector: 'app-home',
