@@ -1,15 +1,41 @@
 <div class = main-container>
+    <div (click) ='closeTray()' class = map>
+
+    </div>
+    <div id="map"></div>
+    <script>
+// Initialize and add the map
+    function initMap() {
+    // The location of Uluru
+    var uluru = {lat: -25.344, lng: 131.036};
+    // The map, centered at Uluru
+    var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 4, center: uluru});
+    // The marker, positioned at Uluru
+    var marker = new google.maps.Marker({position: uluru, map: map});
+    }
+        </script>
+    <script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwLjmsiUV2UWUokv-zHmqLGJ-rnmadHEM&callback=initMap">
+    </script>
     <div id = 'side-panel' class = 'side-panel collapsed'>
         <div class = 'side-panel-top'>
             <div class = logo-container>
                 <mat-icon class = 'logo' aria-hidden="false" aria-label="Dash Logo">videocam</mat-icon>
                 <span class = 'logo-text'>Dash</span>
             </div>
-            <button id= 'close-tray' (click) = 'closeTray()' class = 'close-tray' mat-icon-button aria-label="Example icon button with a heart icon">
+            <button id= 'close-tray' (click) = 'closeTray()' class = 'close-tray' mat-icon-button aria-label="Close tray">
                 <mat-icon>clear</mat-icon>
             </button>
             
         </div>
         
+    </div>
+    <div class = 'searchbar-container'>
+        <div class = searchbar>
+            <button (click) = "openTray()" class = 'menu-button' mat-icon-button aria-label="Open Tray">
+                <mat-icon class= 'menu-icon'>reorder</mat-icon>
+            </button>
+        </div>
     </div>
 </div>
