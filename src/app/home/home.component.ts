@@ -29,6 +29,9 @@ export class HomeComponent implements OnInit {
     document.getElementById("arrow").classList.toggle('collapsed-arrow')
   }
   getAddress(event) {
+    //Latitude: event.geometry.viewport.Za.uf.i
+    //Longitude: event.geometry.viewport.Va.i
+    
     console.log(event);
   }
   initMap() {
