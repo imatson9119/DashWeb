@@ -13,20 +13,14 @@ export class HomeComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    const headers = new HttpHeaders()
-    .append('Content-Type', 'application/json')
-    .append('Access-Control-Allow-Headers', 'Content-Type')
-    .append('Access-Control-Allow-Methods', 'POST')
-    .append('Access-Control-Allow-Origin', '*');
+    /*this.http.get('https://us-central1-dash-66822.cloudfunctions.net/pingLocation?plateNumber=' + "CKJ4091" + "&latitude=" + "55" + "&longitude=" + "56").subscribe(data => {
+      console.log(data);
+    });*/
 
-    this.http.post('https://us-central1-dash-66822.cloudfunctions.net/pingLocation', 
-    { plateNumber: "CKJ4091", latitude: 52, longitude: 53}).subscribe(data => {
+    this.http.get('https://us-central1-dash-66822.cloudfunctions.net/getAlerts').subscribe((data) => {
       console.log(data);
     });
 
-    this.http.post('https://us-central1-dash-66822.cloudfunctions.net/getAlerts', { plateNumber: "CKJ4091", latitude: 52, longitude: 53}).subscribe((data) => {
-      console.log(data);
-    });
     this.initMap();
   }
   toggleTray(){
