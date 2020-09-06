@@ -9,33 +9,39 @@
                 <span class = 'logo-text'>Dash</span>
             </div>
         </div>
-        <div class = 'side-panel-main'>
-            <mat-expansion-panel hideToggle>
-                <mat-expansion-panel-header>
-                <mat-panel-title>
-                    CJK190
-                </mat-panel-title>
-                <mat-panel-description>
-                    3:48 p.m
-                </mat-panel-description>
-                </mat-expansion-panel-header>
-                Ian Matson in 2006 blue/silver Honda Element. Stole 5 children and is currently on the run. Kill on sight.
-                <br>
-                <br>
-                View Picture [O]
-                <br>
-                <br>
-                <ul>
-                    <li>3:48 p.m.<span>Dallas, TX</span></li>
-                    <li>1:48 p.m.<span>College Station, TX</span></li>
-                    <li>10:32 a.m.<span>Cypress, TX</span></li>
-                    <li>10:27 a.m.<span>Cypress, TX</span></li>
-                    <li>9:05 a.m.<span>Houston, TX</span></li>
-                </ul>
-            </mat-expansion-panel>
-            
+        <h1 style='display:flex; align-items: center;'>
+            Recent Sightings: <mat-icon matTooltip="View plates associated with Amber Alerts that have been recently sighted"
+            matTooltipPosition="right">info</mat-icon>
+        </h1>
+        <div *ngIf="!alerts" class = 'loading'>
+            <mat-spinner></mat-spinner>
         </div>
-        
+        <overlay-scrollbars *ngIf="alerts" class = 'side-panel-main'>
+            <mat-expansion-panel hideToggle *ngFor="let alert of alerts;">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <b>{{alert.data.plateNumber}}</b>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{getTime(alert.data.locations[0].time)}}
+                    </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    {{alert.data.description}}
+                    <br>
+                    <br>
+                    <button (click)='openImage()' mat-stroked-button color="primary">View Picture</button>
+                    <br>
+                    <br>
+                    <ul>
+                        <li *ngFor="let sighting of alert.data.locations;"
+                            (click) = "goTo(sighting.latitude, sighting.longitude)"
+                        >{{getTime(sighting.time)}}<span>{{sighting.latitude}},{{sighting.longitude}}</span></li>
+                    </ul>
+            </mat-expansion-panel>
+        </overlay-scrollbars>
+        <div class = 'footer'>
+            Copyright 2020. All rights reserved.
+        </div>
     </div>
     <div id='searchbar' class = 'searchbar-container'>
         <div class = searchbar>
