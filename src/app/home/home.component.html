@@ -39,7 +39,7 @@
             <button (click) = "toggleTray()" class = 'menu-button' mat-icon-button aria-label="Open Tray">
                 <mat-icon id = 'arrow' class= 'menu-icon'>arrow_forward_ios</mat-icon>
             </button>
-            <AutocompleteComponent style class="address-input" (setAddress)="getAddress($event)" addressType="establishment"></AutocompleteComponent>
+            <AutocompleteComponent style class="address-input" (setAddress)="getAddress($event)" addressType="geocode"></AutocompleteComponent>
             <!--<input placeholder="Type something..." class = 'search-text'>-->
             
         </div>

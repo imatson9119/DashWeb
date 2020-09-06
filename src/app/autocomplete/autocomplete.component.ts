@@ -1,6 +1,7 @@
+/// <reference types="@types/googlemaps" />
 import { Component, ViewChild, EventEmitter, Output, OnInit, AfterViewInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import {} from 'googlemaps';
+//import {} from 'googlemaps';
 
 @Component({
     selector: 'AutocompleteComponent',
