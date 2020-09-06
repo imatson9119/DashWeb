@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {google} from "google-maps";
 import { of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
+import { AlertService } from '../alert.service';
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-ngx';
+
 declare var google : google;
 
 @Component({
@@ -15,22 +18,23 @@ export class HomeComponent implements OnInit {
   public timestamp;
   public map;
   public marker;
-  constructor(private http: HttpClient,public dialog: MatDialog) { }
+  constructor(public alertService: AlertService, private http: HttpClient,public dialog: MatDialog) { }
 
   ngOnInit(): void {
     /*this.http.get('https://us-central1-dash-66822.cloudfunctions.net/pingLocation?plateNumber=' + "CKJ4091" + "&latitude=" + "55" + "&longitude=" + "56").subscribe(data => {
       console.log(data);
     });*/
     
-    this.http.get('https://us-central1-dash-66822.cloudfunctions.net/getAlerts').subscribe((data: any) => {
-      this.alerts = data.alerts;
-      console.log(data.alerts);
-    });
-
+    this.getUpdates();
     this.initMap();
     let date = new Date();
     this.timestamp = date.getTime();
-    
+  }
+  getUpdates(){
+    this.http.get('https://us-central1-dash-66822.cloudfunctions.net/getAlerts').subscribe((data: any) => {
+      this.alerts = data.alerts;
+      console.log("Got updates");
+    });
   }
   toggleTray(){
     document.getElementById("side-panel").classList.toggle('collapsed');

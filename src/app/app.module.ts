@@ -13,11 +13,10 @@ import {MatInputModule} from '@angular/material/input';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { FormsModule } from '@angular/forms';
-import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDialogModule} from '@angular/material/dialog';
-
+import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
 
 @NgModule({
   declarations: [
@@ -36,10 +35,10 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatInputModule,
     MatExpansionModule,
     FormsModule,
-    OverlayscrollbarsModule,
     MatTooltipModule,
     MatProgressSpinnerModule,
-    MatDialogModule
+    MatDialogModule,
+    OverlayscrollbarsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
