@@ -18,11 +18,44 @@ let db = admin.firestore();
 
 export const getAlerts = functions.https.onRequest((request: any, response: any) => {
     cors(request, response, () => {
-        //let licensePlate = request.plateNumber;
         let alertsRef = db.collection('alerts');
         
-        alertsRef.get().then((alerts: any) => {
-            response.send(JSON.stringify(alerts));
+        alertsRef.get().then(function(alerts: any) {
+            let arr: Array<any> = [];
+            alerts.forEach(function(doc: any) {
+                arr.push({
+                    id: doc.id,
+                    data: doc.data()
+                });
+            });
+            
+            let res = {
+                alerts: arr
+            };
+
+            response.send(JSON.stringify(res));
         });
     });
 });
+
+export const updateLocation = functions.https.onRequest((request: any, response: any) => {
+    cors(request, response, () => {
+        let plateNumber = request.plateNumber;
+
+        let alertsRef = db.collection('alerts');
+
+        alertsRef.doc(plateNumber + '').set({
+            location: {
+                latitude: request.latitude,
+                longitude: request.longitude
+            } 
+        }).then((docRef: any) => {
+            response.status(200).send("Location updated for plate " + plateNumber);
+        });
+    });
+});
+
+/*
+curl -X POST -H "Content-Type: application/json" -d "{ \"plateNumber\": \"CKJ4091\", \"latitude\": \"50\", \"plateNumber\": \"CKJ4091\" }" http://localhost:3000/api/method
+curl --header "Content-Type: application/json" --request POST --data '{"plateNumber":"CKJ4091","latitude":"50", "longitude": "51"}' https://us-central1-dash-66822.cloudfunctions.net/updateLocation
+*/
