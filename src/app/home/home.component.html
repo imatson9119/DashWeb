@@ -9,29 +9,38 @@
                 <span class = 'logo-text'>Dash</span>
             </div>
         </div>
-        <div class = 'side-panel-main'>
-            <ul class="timeline">
-                <li class="event">
-                    <h3>Dinosaurs Roamed the Earth</h3>
-                    <p>RAWWWWWWRRR 🐢🦂</p>
-                </li>
-                <li class="event" >
-                    <h3>Creative Component Launched</h3>
-                    <p>"We can be all things to all people!" 📣</p>    
-                </li>
-                <li class="event" id="date" >
-                    <h3>Squareflair was Born</h3>
-                    <p></p> <p>"We can be all things to Squarespace users!" 📣</p>    
-                </li>
-                
-                <li class="event">
-                    <h3>Squareflair Today</h3>
-                    <p>"We design and build from scratch!" 📣</p> <p>When we say <em><strong>100% custom</strong></em> we mean it— and we build all sites on the Squarespace Developer platform.</p>
-                    <p>Did you know that all of our pixels are hand-forged from the rarest of subpixels grown and harvested in the <em>Nerd Forest</em>? <br>🤜💥🤛</p>
-                    <p><strong>Our success can be measured by lives and brands enhanced by 9+ years of 100% Squarespace-focused service!</strong></p> 
-                    <p><a href="https://www.squareflair.com">squareflair.com</a></p>
-                </li>
-            </ul>
+        <h1 style='display:flex; align-items: center;'>
+            Recent Sightings: <mat-icon matTooltip="View plates associated with Amber Alerts that have been recently sighted"
+            matTooltipPosition="right">info</mat-icon>
+        </h1>
+        <div *ngIf="!alerts" class = 'loading'>
+            <mat-spinner></mat-spinner>
+        </div>
+        <overlay-scrollbars *ngIf="alerts" class = 'side-panel-main'>
+            <mat-expansion-panel hideToggle *ngFor="let alert of alerts;">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <b>{{alert.data.plateNumber}}</b>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{getTime(alert.data.locations[0].time)}}
+                    </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    {{alert.data.description}}
+                    <br>
+                    <br>
+                    <button (click)='openImage()' mat-stroked-button color="primary">View Picture</button>
+                    <br>
+                    <br>
+                    <ul>
+                        <li *ngFor="let sighting of alert.data.locations;"
+                            (click) = "goTo(sighting.latitude, sighting.longitude)"
+                        >{{getTime(sighting.time)}}<span>{{sighting.latitude}},{{sighting.longitude}}</span></li>
+                    </ul>
+            </mat-expansion-panel>
+        </overlay-scrollbars>
+        <div class = 'footer'>
+            Copyright 2020. All rights reserved.
         </div>
     </div>
     <div id='searchbar' class = 'searchbar-container'>
@@ -39,7 +48,7 @@
             <button (click) = "toggleTray()" class = 'menu-button' mat-icon-button aria-label="Open Tray">
                 <mat-icon id = 'arrow' class= 'menu-icon'>arrow_forward_ios</mat-icon>
             </button>
-            <AutocompleteComponent style class="address-input" (setAddress)="getAddress($event)" addressType="geocode"></AutocompleteComponent>
+            <AutocompleteComponent style='flex:1' class="address-input" (setAddress)="getAddress($event)" addressType="geocode"></AutocompleteComponent>
             <!--<input placeholder="Type something..." class = 'search-text'>-->
             
         </div>

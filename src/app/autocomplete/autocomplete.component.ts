@@ -9,7 +9,9 @@ import { FormGroup, FormBuilder } from '@angular/forms';
       <input class="input"
         type="text"
         [(ngModel)]="autocompleteInput"
-        #addresstext style="padding: 12px 20px; border: 1px solid #ccc; width: 400px"
+        #addresstext style="outline: none;
+        font-size: 18px;
+        width: 100%;"
         >
     `,
 })

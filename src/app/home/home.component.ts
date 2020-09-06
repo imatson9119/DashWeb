@@ -1,6 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {google} from "google-maps";
+import { of } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertService } from '../alert.service';
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-ngx';
+
 declare var google : google;
 
 @Component({
@@ -9,19 +14,27 @@ declare var google : google;
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
-  constructor(private http: HttpClient) { }
+  public alerts: any[];
+  public timestamp;
+  public map;
+  public marker;
+  constructor(public alertService: AlertService, private http: HttpClient,public dialog: MatDialog) { }
 
   ngOnInit(): void {
     /*this.http.get('https://us-central1-dash-66822.cloudfunctions.net/pingLocation?plateNumber=' + "CKJ4091" + "&latitude=" + "55" + "&longitude=" + "56").subscribe(data => {
       console.log(data);
     });*/
-
-    this.http.get('https://us-central1-dash-66822.cloudfunctions.net/getAlerts').subscribe((data) => {
-      console.log(data);
-    });
-
+    
+    this.getUpdates();
     this.initMap();
+    let date = new Date();
+    this.timestamp = date.getTime();
+  }
+  getUpdates(){
+    this.http.get('https://us-central1-dash-66822.cloudfunctions.net/getAlerts').subscribe((data: any) => {
+      this.alerts = data.alerts;
+      console.log("Got updates");
+    });
   }
   toggleTray(){
     document.getElementById("side-panel").classList.toggle('collapsed');
@@ -31,14 +44,63 @@ export class HomeComponent implements OnInit {
   getAddress(event) {
     //Latitude: event.geometry.viewport.Za.uf.i
     //Longitude: event.geometry.viewport.Va.i
-    
     console.log(event);
+    console.log(event.geometry.viewport.Za.i);
+    var x = (event.geometry.viewport.Za.i + event.geometry.viewport.Za.j) / 2;
+    var y = (event.geometry.viewport.Va.i + event.geometry.viewport.Va.j) / 2;
+    this.goTo(x,y);
+    
+  }
+  getTime(t:number) : string{
+    if(!this.timestamp || !t){
+      return "";
+    }
+    let time = this.timestamp-t;
+    time /= 1000; // seconds
+    if(time < 60){
+      return Math.round(time) + "s";
+    }
+    else{
+      time /= 60; // mins
+      if(time < 60){
+        return Math.round(time) + "m";
+      }
+      else{
+        time /= 60; // hrs
+        if(time < 24){
+          return Math.round(time) + "h";
+        }
+        else{
+          time /= 24; // days
+          if(time < 365){
+            return Math.round(time) + "d";
+          }
+          else{
+            time /= 365; // years
+            return Math.round(time) + "y";
+          }
+        }
+      }
+    }
+  }
+  goTo(latitude, longitude){
+    let offset = 0;
+    if(!document.getElementById('side-panel').classList.contains('collapsed')){
+      offset = -.27;
+    }
+    if(this.marker){
+      this.marker.setMap(null);
+      this.marker = {};
+    }
+    this.map.setCenter({lat: latitude, lng: longitude+offset});
+    this.map.setZoom(10);
+    this.marker = new google.maps.Marker({position: {lat: latitude,lng: longitude}, map: this.map});
   }
   initMap() {
     // The location of Uluru
     var cstat = {lat: 30.615546, lng: -96.341178};
     // The map, centered at Uluru
-    var map = new google.maps.Map(
+    this.map = new google.maps.Map(
         document.getElementById('map'), {zoom: 15, center: cstat,
           styles: [
             {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
@@ -122,7 +184,17 @@ export class HomeComponent implements OnInit {
           ]
         });
     // The marker, positioned at Uluru
-    var marker = new google.maps.Marker({position: cstat, map: map});
+    //var marker = new google.maps.Marker({position: cstat, map: this.map});
+  
+  }
+  openImage() {
+    this.dialog.open(ImageDialog);
   }
   
 }
+
+@Component({
+  selector: 'image-dialog',
+  templateUrl: 'image-dialog.html',
+})
+export class ImageDialog {}
