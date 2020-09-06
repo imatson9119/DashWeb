@@ -23,17 +23,76 @@ export const getAlerts = functions.https.onRequest((request: any, response: any)
         alertsRef.get().then(function(alerts: any) {
             let arr: Array<any> = [];
             alerts.forEach(function(doc: any) {
-                arr.push({
-                    id: doc.id,
-                    data: doc.data()
-                });
+                if(doc.data().locations) { // Make sure it has been seen at least once to show up
+                    arr.push({
+                        id: doc.id,
+                        data: doc.data()
+                    });
+
+                    //Sort events by time (soonest first)
+                    arr[arr.length - 1].data.locations.sort(function(a : any, b : any) {
+                        return parseInt(b.time) - parseInt(a.time);
+                    });
+                }
             });
             
+
+
             let res = {
                 alerts: arr
             };
+            response.set('Access-Control-Allow-Origin', '*');
 
             response.send(JSON.stringify(res));
+        });
+    });
+});
+
+export const getAlerts2 = functions.https.onRequest((request: any, response: any) => {
+    cors(request, response, () => {
+        let alertsRef = db.collection('alerts');
+        
+        alertsRef.get().then(function(alerts: any) {
+            let arr: Array<any> = [];
+            alerts.forEach(function(doc: any) {
+                if(doc.data().locations) { // Make sure it has been seen at least once to show up
+                    arr.push({
+                        id: doc.id,
+                        data: doc.data()
+                    });
+
+                    //Sort events by time (soonest first)
+                    /*arr[arr.length - 1].data.locations.sort(function(a : any, b : any) {
+                        return parseInt(b.time) - parseInt(a.time);
+                    });*/
+                }
+            });
+            
+
+
+            let res = {
+                alerts: arr
+            };
+            response.set('Access-Control-Allow-Origin', '*');
+
+            response.send(JSON.stringify(res));
+        });
+    });
+});
+
+export const getPlates = functions.https.onRequest((request: any, response: any) => {
+    cors(request, response, () => {
+        let alertsRef = db.collection('alerts');
+        
+        let plateString = "";
+
+        alertsRef.get().then(function(alerts: any) {
+            alerts.forEach(function(doc: any) {
+                    plateString += doc.id + ",";
+            });
+            response.set('Access-Control-Allow-Origin', '*');
+
+            response.send(plateString);
         });
     });
 });
@@ -43,22 +102,44 @@ export const pingLocation = functions.https.onRequest((request: any, response: a
         let plateNumber = request.query.plateNumber.toString();
         //response.send(request);
         db.collection('alerts').where("plateNumber", "==", plateNumber).get().then((res: any) => {
-            res;
             res.forEach(function(doc: any) {
-                doc.ref.update({location: {
-                    latitude: request.query.latitude,
-                    longitude: request.query.longitude
-                }});
+                let arr = doc.data().locations;
+                
+                arr.push({
+                    latitude: Number.parseFloat(request.query.latitude),
+                    longitude: Number.parseFloat(request.query.longitude),
+                    time: Number.parseInt(request.query.time),
+                });
+
+                doc.ref.update({locations: arr});
             });
-            
+            response.set('Access-Control-Allow-Origin', '*');
+
             response.send(request.query);
         });
-        
+    });
+});
 
-        
-        /*.then((docRef: any) => {
-            response.status(200).send("Location updated for plate " + plateNumber);
-        });*/
+export const pingLocation2 = functions.https.onRequest((request: any, response: any) => {
+    cors(request, response, () => {
+        let plateNumber = request.query.plateNumber.toString();
+        //response.send(request);
+        db.collection('alerts').where("plateNumber", "==", plateNumber).get().then((res: any) => {
+            res.forEach(function(doc: any) {
+                let arr = doc.data().locations;
+                
+                arr.push({
+                    latitude: Number.parseFloat(request.query.latitude),
+                    longitude: Number.parseFloat(request.query.longitude),
+                    time: Number.parseInt(request.query.time),
+                });
+
+                doc.ref.update({locations: arr});
+            });
+            response.set('Access-Control-Allow-Origin', '*');
+
+            response.send(JSON.stringify(request.query));
+        });
     });
 });
 
