@@ -28,6 +28,9 @@ export class HomeComponent implements OnInit {
     document.getElementById("searchbar").classList.toggle('collapsed');
     document.getElementById("arrow").classList.toggle('collapsed-arrow')
   }
+  getAddress(event) {
+    console.log(event);
+  }
   initMap() {
     // The location of Uluru
     var cstat = {lat: 30.615546, lng: -96.341178};

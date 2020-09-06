@@ -93,3 +93,91 @@
 ::ng-deep .gmnoprint{
     display: none
 }
+  
+  strong {
+    font-weight: 600;
+  }
+  
+  h1 {
+   letter-spacing: 1.5px;
+   color: whitesmoke;  
+   font-weight: 400;
+   font-size: 2.4em;
+  }
+  
+  #timeline-content {
+    margin-top: 50px;
+    text-align: center;  
+  }
+  
+  /* Timeline */
+  
+  .timeline {
+    border-left: 120px solid #999;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;    
+    background: fade(whitesmoke, 3%);
+    color: fade(white, 80%);
+    margin: 50px auto;  
+    letter-spacing: 0.5px;   
+    position: relative;
+    line-height: 1.4em;
+    font-size: 1.03em;   
+    padding: 50px;   
+    list-style: none;
+    text-align: left;  
+    font-weight: 100;  
+    max-width: 30%; 
+    
+    h1 {
+     letter-spacing: 1.5px;
+     font-weight: 100;
+     font-size: 1.4em;    
+    }
+    
+    h2, h3 {
+     letter-spacing: 1.5px;
+     font-weight: 400;
+     font-size: 1.4em;
+    }
+    
+    .event {
+      border-bottom: 1px dashed fade(whitesmoke, 10%);
+      padding-bottom: (50px * 0.5);
+      margin-bottom: 50px;  
+      position: relative;
+  
+      &:last-of-type { 
+        padding-bottom: 0;
+        margin-bottom: 0; 
+        border: none;      
+      }
+  
+      &:before, &:after {
+        position: absolute;
+        display: block;
+        top: 0;
+      }
+  
+      &:before {
+        left: (((120px * 0.6) + 50px + 4px + 11px + (4px * 2)) * 1.5) * -1;    
+        color: fade(whitesmoke, 40%);    
+        content: attr(data-date);
+        text-align: right;
+        font-weight: 100;    
+        font-size: 0.9em;
+        min-width: 120px;
+      }
+  
+      &:after {
+        box-shadow: 0 0 0 4px fade(blue,100%);    
+        left: (50px + 4px + (11px * 0.35)) * -1;        
+        background: lighten(black,5%);    
+        border-radius: 50%;  
+        height: 11px;
+        width: 11px;
+        content: "";
+        top: 5px;
+      }
+    }
+}

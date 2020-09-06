@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatInputModule} from '@angular/material/input';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { AutocompleteComponent } from './autocomplete/autocomplete.component';
     HttpClientModule,
     MatInputModule,
     MatExpansionModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
