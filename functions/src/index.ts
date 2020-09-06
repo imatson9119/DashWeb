@@ -38,7 +38,7 @@ export const getAlerts = functions.https.onRequest((request: any, response: any)
     });
 });
 
-export const updateLocation = functions.https.onRequest((request: any, response: any) => {
+export const pingLocation = functions.https.onRequest((request: any, response: any) => {
     cors(request, response, () => {
         let plateNumber = request.plateNumber;
 

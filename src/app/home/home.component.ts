@@ -16,14 +16,14 @@ export class HomeComponent implements OnInit {
     .append('Access-Control-Allow-Methods', 'POST')
     .append('Access-Control-Allow-Origin', '*');
 
-    /*this.http.post('https://us-central1-dash-66822.cloudfunctions.net/updateLocation', 
+    this.http.post('https://us-central1-dash-66822.cloudfunctions.net/pingLocation', 
     { plateNumber: "CKJ4091", latitude: 52, longitude: 53}).subscribe(data => {
       console.log(data);
     });
 
-    this.http.post('https://us-central1-dash-66822.cloudfunctions.net/getAlerts', {}).subscribe((data) => {
+    this.http.post('https://us-central1-dash-66822.cloudfunctions.net/getAlerts', { plateNumber: "CKJ4091", latitude: 52, longitude: 53}).subscribe((data) => {
       console.log(data);
-    });*/
+    });
   }
   closeTray(){
     document.getElementById("side-panel").classList.add('collapsed');
