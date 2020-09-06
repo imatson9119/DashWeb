@@ -40,8 +40,9 @@ export const getAlerts = functions.https.onRequest((request: any, response: any)
 
 export const pingLocation = functions.https.onRequest((request: any, response: any) => {
     cors(request, response, () => {
-        let plateNumber = request.plateNumber;
-
+        response.send("test");
+        /*let plateNumber = request.plateNumber;
+        
         let alertsRef = db.collection('alerts');
 
         alertsRef.doc(plateNumber + '').set({
@@ -51,7 +52,7 @@ export const pingLocation = functions.https.onRequest((request: any, response: a
             } 
         }).then((docRef: any) => {
             response.status(200).send("Location updated for plate " + plateNumber);
-        });
+        });*/
     });
 });
 
