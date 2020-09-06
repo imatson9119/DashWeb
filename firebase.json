@@ -7,11 +7,7 @@
     "predeploy": "npm --prefix \"$RESOURCE_DIR\" run build"
   },
   "hosting": {
-<<<<<<< HEAD
     "public": "dist/dash",
-=======
-    "public": "dist/Dash",
->>>>>>> 38de02b9553d3be60d00fd8d72b311ac48a97b95
     "ignore": [
       "firebase.json",
       "**/.*",
