@@ -10,36 +10,39 @@
             </div>
         </div>
         <div class = 'side-panel-main'>
-            <ul class="timeline">
-                <li class="event">
-                    <h3>Dinosaurs Roamed the Earth</h3>
-                    <p>RAWWWWWWRRR 🐢🦂</p>
-                </li>
-                <li class="event" >
-                    <h3>Creative Component Launched</h3>
-                    <p>"We can be all things to all people!" 📣</p>    
-                </li>
-                <li class="event" id="date" >
-                    <h3>Squareflair was Born</h3>
-                    <p></p> <p>"We can be all things to Squarespace users!" 📣</p>    
-                </li>
-                
-                <li class="event">
-                    <h3>Squareflair Today</h3>
-                    <p>"We design and build from scratch!" 📣</p> <p>When we say <em><strong>100% custom</strong></em> we mean it— and we build all sites on the Squarespace Developer platform.</p>
-                    <p>Did you know that all of our pixels are hand-forged from the rarest of subpixels grown and harvested in the <em>Nerd Forest</em>? <br>🤜💥🤛</p>
-                    <p><strong>Our success can be measured by lives and brands enhanced by 9+ years of 100% Squarespace-focused service!</strong></p> 
-                    <p><a href="https://www.squareflair.com">squareflair.com</a></p>
-                </li>
-            </ul>
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                <mat-panel-title>
+                    CJK190
+                </mat-panel-title>
+                <mat-panel-description>
+                    3:48 p.m
+                </mat-panel-description>
+                </mat-expansion-panel-header>
+                Ian Matson in 2006 blue/silver Honda Element. Stole 5 children and is currently on the run. Kill on sight.
+                <br>
+                <br>
+                View Picture [O]
+                <br>
+                <br>
+                <ul>
+                    <li>3:48 p.m.<span>Dallas, TX</span></li>
+                    <li>1:48 p.m.<span>College Station, TX</span></li>
+                    <li>10:32 a.m.<span>Cypress, TX</span></li>
+                    <li>10:27 a.m.<span>Cypress, TX</span></li>
+                    <li>9:05 a.m.<span>Houston, TX</span></li>
+                </ul>
+            </mat-expansion-panel>
+            
         </div>
+        
     </div>
     <div id='searchbar' class = 'searchbar-container'>
         <div class = searchbar>
             <button (click) = "toggleTray()" class = 'menu-button' mat-icon-button aria-label="Open Tray">
                 <mat-icon id = 'arrow' class= 'menu-icon'>arrow_forward_ios</mat-icon>
             </button>
-            <AutocompleteComponent style class="address-input" (setAddress)="getAddress($event)" addressType="geocode"></AutocompleteComponent>
+            <AutocompleteComponent style='flex:1' class="address-input" (setAddress)="getAddress($event)" addressType="geocode"></AutocompleteComponent>
             <!--<input placeholder="Type something..." class = 'search-text'>-->
             
         </div>
